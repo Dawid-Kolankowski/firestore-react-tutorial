@@ -9,7 +9,7 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
         <div className="CurrentUser--information">
           <h2>{displayName}</h2>
           <p className="email">{email}</p>
-          <p className="created-at">{moment(createdAt).calendar()}</p>
+          <p className="created-at">{moment(createdAt.toDate()).calendar()}</p>
         </div>
       </div>
       <div>
@@ -19,12 +19,5 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
     </section>
   );
 };
-
-// CurrentUser.defaultProps = {
-//   displayName: "Bill Murray",
-//   email: "billmurray@mailinator.com",
-//   photoURL: "https://www.fillmurray.com/300/300",
-//   createdAt: new Date(),
-// };
 
 export default CurrentUser;
