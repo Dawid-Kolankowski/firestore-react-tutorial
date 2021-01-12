@@ -21,7 +21,6 @@ class Application extends Component {
         this.setState({ posts });
       });
     this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      console.log(user);
       this.setState({ user });
     });
   };
