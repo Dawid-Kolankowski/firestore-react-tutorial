@@ -22,4 +22,46 @@ export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export const signOut = () => auth.signOut();
 window.firebase = firebase; //attach to window for debug
 
+export const createUserProfileDocument = async (user, additionalData) => {
+  console.log(user);
+  if (!user) return;
+  //Get a reference to the placa in the database where user profile might be.
+  const userRef = firestore.doc(`users/${user.uid}`);
+  //Go and fetch the document from that location
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists) {
+    const createdAt = new Date();
+
+    const { displayName, email, photoURL } = user;
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        photoURL,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return getUserDocument(user.uid);
+};
+
+export const getUserDocument = async (uid) => {
+  if (!uid) return null;
+  try {
+    const userDocument = await firestore.collection("users").doc(uid).get();
+
+    return {
+      uid,
+      ...userDocument.data(),
+    };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default firebase;

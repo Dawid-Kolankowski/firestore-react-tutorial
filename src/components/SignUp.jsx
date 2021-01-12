@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { auth } from "../firebase";
+import { auth, createUserProfileDocument } from "../firebase";
 
 class SignUp extends Component {
   state = { displayName: "", email: "", password: "" };
 
-  handleChange = async (event) => {
+  handleChange = (event) => {
     const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
+  handleSubmit = async (event) => {
+    event.preventDefault();
     const { email, password, displayName } = this.state;
 
     try {
@@ -14,17 +18,11 @@ class SignUp extends Component {
         email,
         password
       );
-      user.updateProfile({ displayName });
-      user.reload();
+
+      createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.error(error);
     }
-
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
 
     this.setState({ displayName: "", email: "", password: "" });
   };
