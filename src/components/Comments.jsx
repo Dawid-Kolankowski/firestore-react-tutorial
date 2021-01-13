@@ -3,7 +3,6 @@ import Comment from "./Comment";
 import AddComment from "./AddComment";
 
 const Comments = ({ comments, onCreate }) => {
-  console.log(comments);
   return (
     <section className="Comments">
       <AddComment onCreate={onCreate} />
