@@ -22,7 +22,6 @@ export const signOut = () => auth.signOut();
 window.firebase = firebase; //attach to window for debug
 
 export const createUserProfileDocument = async (user, additionalData) => {
-  console.log(user);
   if (!user) return;
   //Get a reference to the placa in the database where user profile might be.
   const userRef = firestore.doc(`users/${user.uid}`);
@@ -50,11 +49,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
 export const getUserDocument = async (uid) => {
   if (!uid) return null;
   try {
-    const userDocument = await firestore.collection("users").doc(uid).get();
-    return {
-      uid,
-      ...userDocument.data(),
-    };
+    return firestore.collection("users").doc(uid);
   } catch (error) {
     console.error(error);
   }

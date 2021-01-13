@@ -12,7 +12,9 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
             <h2>{displayName}</h2>
           </Link>
           <p className="email">{email}</p>
-          <p className="created-at">{moment(createdAt.toDate()).calendar()}</p>
+          <p className="created-at">
+            {createdAt ? moment(createdAt.toDate()).calendar() : null}
+          </p>
         </div>
       </div>
       <div>
